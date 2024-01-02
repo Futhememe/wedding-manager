@@ -18,7 +18,7 @@ export const IconButton = styled("button", {
       bgColor: "gray.200",
     },
 
-    transition: "0.5s",
+    transition: "0.7s",
   },
 });
 

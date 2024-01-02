@@ -3,9 +3,10 @@ import { Box } from "../Box";
 import { Content, TabList, Trigger } from "../Ark/Tabs";
 import { useManager } from "@/contexts/provider";
 import { Guest } from "../Guest";
+import { Invite } from "../Invite";
 
 export const List = () => {
-  const { guests } = useManager();
+  const { guests, invites } = useManager();
 
   return (
     <Box w="100%">
@@ -19,7 +20,11 @@ export const List = () => {
             <Guest key={guest.id} guest={guest} />
           ))}
         </Content>
-        <Content value="invite">invite</Content>
+        <Content value="invite">
+          {invites?.map((invite) => (
+            <Invite key={invite.id} invite={invite} />
+          ))}
+        </Content>
       </Tabs.Root>
     </Box>
   );

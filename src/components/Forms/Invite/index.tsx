@@ -12,8 +12,7 @@ import { X } from "@phosphor-icons/react";
 import { useDialog } from "@/components/Dialog/context/hook";
 import { Input, Label } from "@/components/Input";
 import { Column, Row } from "@/components/Layout";
-import { Checkbox } from "@/components/Checkbox";
-import { BoxButton } from "@/components/Box";
+import { Checkbox } from "@/components/Ark/Checkbox";
 import { useInviteForm } from "./hook";
 import { Controller } from "react-hook-form";
 

@@ -6,10 +6,10 @@ import { InviteForm } from "../Forms/Invite";
 import { useManager } from "@/contexts/provider";
 
 export const Actions = () => {
-  const { guests } = useManager();
+  const { guests, invites } = useManager();
 
   return (
-    <Box w="360px" position="sticky" top="1rem">
+    <Box w="343px" position={["relative", "sticky"]} top="1rem">
       <Heading>Lista de casamento</Heading>
       <Dialog.Root>
         <Dialog.Trigger asChild>
@@ -23,12 +23,13 @@ export const Actions = () => {
           <InviteForm />
         </Dialog.Content>
       </Dialog.Root>
-      <BoxButton>
+      <BoxButton disabled>
         <UserPlus size={20} />
         Adicionar convidado
       </BoxButton>
       <Box p="0.75rem" mt="1rem" flexDir="row">
-        <Envelope size={20} />4 convites
+        <Envelope size={20} />
+        {invites.length} convites
       </Box>
       <Box p="0.75rem" flexDir="row">
         <User size={20} />

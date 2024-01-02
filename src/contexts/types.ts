@@ -7,3 +7,12 @@ export interface IGuest {
   van: boolean;
   id: string;
 }
+
+export interface IInvite {
+  id: string
+  description: string
+  guests: {
+    id: string
+    name: string
+  }[]
+}
