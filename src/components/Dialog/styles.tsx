@@ -12,6 +12,7 @@ export const DialogContent = styled(motion["div"], {
     p: "1rem",
     bgColor: "white",
     h: "100%",
+    zIndex: 10,
   },
   variants: {
     variant: {

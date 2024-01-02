@@ -17,7 +17,6 @@ import { useInviteForm } from "./hook";
 import { Controller } from "react-hook-form";
 
 export const InviteForm = () => {
-  const { setOpen } = useDialog();
   const {
     guestsFields,
     control,
@@ -26,13 +25,14 @@ export const InviteForm = () => {
     guestSearch,
     handleSubmit,
     handleConfirm,
+    setOpenInvite,
   } = useInviteForm();
 
   return (
     <Content>
       <Header>
         <Title>Novo convite</Title>
-        <IconButton onClick={() => setOpen(false)}>
+        <IconButton type="button" onClick={() => setOpenInvite(false)}>
           <X size={20} />
         </IconButton>
       </Header>

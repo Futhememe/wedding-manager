@@ -6,14 +6,18 @@ import { InviteForm } from "../Forms/Invite";
 import { useManager } from "@/contexts/provider";
 
 export const Actions = () => {
-  const { guests, invites } = useManager();
+  const { guests, invites, openInvite, setOpenInvite } = useManager();
 
   return (
     <Box w="343px" position={["relative", "sticky"]} top="1rem">
       <Heading>Lista de casamento</Heading>
-      <Dialog.Root>
+      <Dialog.Root
+        open={openInvite}
+        initialOpen={false}
+        onOpenChange={(open) => setOpenInvite(open)}
+      >
         <Dialog.Trigger asChild>
-          <BoxButton variant="primary">
+          <BoxButton variant="primary" onClick={() => setOpenInvite(true)}>
             {" "}
             <Plus size={20} />
             Adicionar convite

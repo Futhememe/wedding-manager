@@ -11,7 +11,7 @@ export const useInviteForm = () => {
     resolver: zodResolver(inviteSchema)
   })
 
-  const { guests } = useManager()
+  const { guests, setOpenInvite } = useManager()
 
   const { fields: guestsFields } = useFieldArray({
     control,
@@ -31,6 +31,8 @@ export const useInviteForm = () => {
     await api.post('/invite', {
       invite: rest
     })
+
+    setOpenInvite(false)
   }
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export const useInviteForm = () => {
     getValues,
     include,
     guestSearch,
-    handleConfirm
+    handleConfirm,
+    setOpenInvite
   }
 }
