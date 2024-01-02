@@ -11,14 +11,14 @@ interface IInviteComponent {
 }
 
 export const Invite = ({ invite }: IInviteComponent) => {
-  const { getGuestById } = useManager();
+  const { setOpenInvite } = useManager();
 
   return (
     <Container>
       <Row justifyContent="space-between">
         <Name>{invite.description}</Name>
         <Actions>
-          <IconButton>
+          <IconButton onClick={() => setOpenInvite(true, invite.id)}>
             <PencilLine size={20} />
           </IconButton>
           <IconButton>

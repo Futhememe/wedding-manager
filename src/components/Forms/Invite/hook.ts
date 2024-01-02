@@ -11,7 +11,7 @@ export const useInviteForm = () => {
     resolver: zodResolver(inviteSchema)
   })
 
-  const { guests, setOpenInvite } = useManager()
+  const { guests, setOpenInvite, selectedInvite, getInviteById } = useManager()
 
   const { fields: guestsFields } = useFieldArray({
     control,
@@ -28,9 +28,18 @@ export const useInviteForm = () => {
   }
 
   async function handleConfirm({guestSearch, ...rest}: IInviteOutput) {
-    await api.post('/invite', {
-      invite: rest
-    })
+    if(selectedInvite) {
+      await api.patch('/invite', {
+        invite: {
+          ...rest,
+          id: selectedInvite
+        }
+      })
+    } else {
+      await api.post('/invite', {
+        invite: rest
+      })
+    }
 
     setOpenInvite(false)
   }
@@ -38,6 +47,23 @@ export const useInviteForm = () => {
   useEffect(() => {
     setValue('guests', guests.map(guest => ({ id: guest.id, name: guest.name, enabled: false })))
   }, [guests])
+
+  useEffect(() => {
+    if(selectedInvite) {
+      const invite = getInviteById(selectedInvite)
+
+      setValue('description', invite?.description)
+      setValue('guests', guests.map(guest => {
+        const invitedGuest = invite?.guests.find(inviteGuest => inviteGuest.id === guest.id)
+
+        if(invitedGuest) {
+          return { id: guest.id, name: guest.name, enabled: true }
+        }else {
+          return { id: guest.id, name: guest.name, enabled: false }
+        }
+      }))
+    } 
+  }, [selectedInvite])
 
   return {
     ...rest,

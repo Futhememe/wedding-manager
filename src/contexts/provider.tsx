@@ -12,8 +12,10 @@ interface IManagerContext {
   guests: IGuest[];
   invites: IInvite[];
   getGuestById: (id: string) => IGuest | null;
+  getInviteById: (id: string) => IInvite | null;
   openInvite: boolean;
-  setOpenInvite: (open: boolean) => void;
+  setOpenInvite: (open: boolean, invite?: string) => void;
+  selectedInvite: string;
 }
 
 interface IManagerProvider {
@@ -30,13 +32,22 @@ export const ManagerProvider = ({
   invites,
 }: IManagerProvider) => {
   const [inviteopen, setinviteopen] = useState<boolean>(false);
+  const [selectedInvite, setSelectedInvite] = useState<string>("");
+
   const getGuestById = (id: string): IGuest | null => {
     const guest = guests?.find((guest) => guest.id === id);
 
     return guest ?? null;
   };
 
-  function handleOpenInvite(open: boolean) {
+  const getInviteById = (id: string): IInvite | null => {
+    const invite = invites?.find((invite) => invite.id === id);
+
+    return invite ?? null;
+  };
+
+  function handleOpenInvite(open: boolean, invite?: string) {
+    setSelectedInvite(invite ?? "");
     setinviteopen(open);
   }
 
@@ -46,8 +57,10 @@ export const ManagerProvider = ({
         guests,
         invites,
         getGuestById,
+        getInviteById,
         openInvite: inviteopen,
         setOpenInvite: handleOpenInvite,
+        selectedInvite,
       }}
     >
       {children}

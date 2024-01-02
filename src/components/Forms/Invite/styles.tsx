@@ -7,7 +7,8 @@ export const Content = styled("div", {
     position: "relative",
     alignItems: "center",
 
-    w: "400px",
+    maxW: ["100%", "400px"],
+    w: ["100%", "400px"],
   },
 });
 
@@ -68,7 +69,7 @@ export const CheckboxList = styled("div", {
   base: {
     display: "flex",
     flexDir: "column",
-    maxH: "500px",
+    maxH: ["300px", "500px"],
     overflowY: "scroll",
 
     p: "0.75rem 0",

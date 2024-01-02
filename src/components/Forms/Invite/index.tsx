@@ -68,6 +68,8 @@ export const InviteForm = () => {
                       <Checkbox
                         {...rest}
                         label={getValues(`guests.${index}.name`)}
+                        // @ts-ignore
+                        checked={rest.value}
                       />
                     )}
                   />

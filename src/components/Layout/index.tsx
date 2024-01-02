@@ -4,6 +4,7 @@ export const Row = styled("div", {
   base: {
     display: "flex",
     alignItems: "center",
+    flexWrap: "wrap",
   },
 });
 
