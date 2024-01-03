@@ -1,11 +1,21 @@
-import { Envelope, Plus, User, UserPlus } from "@phosphor-icons/react";
+import {
+  ArrowClockwise,
+  Envelope,
+  Plus,
+  User,
+  UserPlus,
+} from "@phosphor-icons/react";
 import { Box, BoxButton } from "../Box";
 import { Heading } from "../Layout";
 import { Dialog } from "../Dialog";
 import { InviteForm } from "../Forms/Invite";
 import { useManager } from "@/contexts/provider";
 
-export const Actions = () => {
+interface IActions {
+  reload: () => void;
+}
+
+export const Actions = ({ reload }: IActions) => {
   const { guests, invites, openInvite, setOpenInvite } = useManager();
 
   return (
@@ -39,6 +49,10 @@ export const Actions = () => {
         <User size={20} />
         {guests.length} convidados
       </Box>
+      <BoxButton onClick={reload}>
+        <ArrowClockwise size={20} />
+        Recarregar
+      </BoxButton>
     </Box>
   );
 };

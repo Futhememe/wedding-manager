@@ -50,6 +50,11 @@ export default function Home() {
     setInvites(res ?? []);
   }
 
+  function handleReset() {
+    handleAllGuests();
+    handleAllInvites();
+  }
+
   useEffect(() => {
     handleAllGuests();
     handleAllInvites();
@@ -75,7 +80,7 @@ export default function Home() {
             p: "1rem",
           })}
         >
-          <Actions />
+          <Actions reload={handleReset} />
           <List />
         </div>
       </main>
