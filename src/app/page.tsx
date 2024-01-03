@@ -21,7 +21,7 @@ async function getAllGuests(): Promise<IGuest[] | null> {
   }
 }
 
-export async function getAllInvites(): Promise<IInvite[] | null> {
+async function getAllInvites(): Promise<IInvite[] | null> {
   try {
     const res = await api.get("/invite/all");
 
