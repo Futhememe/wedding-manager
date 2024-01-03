@@ -1,10 +1,18 @@
-import { ReactNode } from "react";
-import { TagContainer } from "./styles";
+import { styled } from "@styled-system/jsx";
 
-interface ITag {
-  children: ReactNode | ReactNode[];
-}
+export const Tag = styled("div", {
+  base: {
+    display: "flex",
+    alignItems: "center",
 
-export const Tag = ({ children }: ITag) => {
-  return <TagContainer>{children}</TagContainer>;
-};
+    p: "0.5rem",
+
+    fontSize: "sm",
+    color: "neutral.600",
+    fontWeight: "medium",
+    lineHeight: "none",
+
+    borderRadius: "md",
+    bgColor: "gray.100",
+  },
+});
