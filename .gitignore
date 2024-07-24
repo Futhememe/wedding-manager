@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/styled-system
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -35,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+## Panda
+styled-system
+styled-system-studio

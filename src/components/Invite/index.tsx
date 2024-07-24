@@ -1,45 +1,75 @@
-import { IGuest, IInvite } from "@/contexts/types";
-import { Actions, Container, Name, Pair } from "./styles";
-import { Row } from "../Layout";
-import { useManager } from "@/contexts/provider";
-import { Tag } from "../Tag";
-import { IconButton } from "../Button";
-import { Link, PencilLine, Trash } from "@phosphor-icons/react";
-import { useClipboard } from "./hooks/useClipboard";
+import { InviteDTO } from "@/stores/inviteStore";
+import { Badge, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
+import { Link, Pencil, Trash } from "@phosphor-icons/react";
+import { useInvite } from "./hooks/useInvite";
 
-interface IInviteComponent {
-  invite: IInvite;
+interface IInvite {
+  onClickDelete: (id: string) => void;
+  onClickEdit: (id: string) => void;
+  invite: InviteDTO;
 }
 
-export const Invite = ({ invite }: IInviteComponent) => {
-  const { setOpenInvite } = useManager();
-  const { hasCopied, onCopy } = useClipboard(
-    `Queridos amigos e familiares,\nÉ com muita alegria que convidamos para celebrar esse momento especial conosco. Nosso casamento!✨\n\nPara facilitar a organização, optamos por utilizar um site como convite oficial. Nele, vocês encontrarão todas as informações necessárias, incluindo, o horário da cerimônia, o local da festa, a lista de presentes, detalhes sobre como ir de van e outras informações importantes.\n\nAcessem nosso site https://wedding.withgu.com/${invite.id} para confirmar presença e obter todos os detalhes. Esperamos ansiosamente por esse dia e pela presença de cada um de vocês!\n\nEsther e Gustavo🤍`
-  );
+export const Invite = ({ onClickDelete, onClickEdit, invite }: IInvite) => {
+  const { onCopy, sendWhatsapp } = useInvite({ inviteId: invite.id });
 
   return (
-    <Container>
-      <Row justifyContent="space-between">
-        <Name>{invite.description}</Name>
-        <Actions>
-          <IconButton onClick={() => onCopy()}>
+    <Flex
+      p={"8px 0 16px"}
+      flexDir={"column"}
+      w={"100%"}
+      borderBottom={"1px solid #e9eaef"}
+      gap={"0.25rem"}
+    >
+      <Flex justifyContent={"space-between"} alignItems={"center"}>
+        <Heading fontSize={"large"}>{invite?.description ?? ""}</Heading>
+        <Flex>
+          <IconButton
+            aria-label="edit"
+            variant="ghost"
+            onClick={() => {
+              if (invite?.phone) {
+                sendWhatsapp(invite?.phone);
+                return;
+              }
+              onCopy();
+            }}
+          >
             <Link size={20} />
           </IconButton>
-          <IconButton onClick={() => setOpenInvite(true, invite.id)}>
-            <PencilLine size={20} />
+          <IconButton
+            aria-label="edit"
+            variant="ghost"
+            onClick={() => onClickEdit(invite.id)}
+          >
+            <Pencil size={20} />
           </IconButton>
-          <IconButton>
+          <IconButton
+            aria-label="delete"
+            variant="ghost"
+            onClick={() => onClickDelete(invite.id)}
+          >
             <Trash size={20} />
           </IconButton>
-        </Actions>
-      </Row>
-      <Row justifyContent="space-between">
-        <Row gap="0.5rem">
-          {invite?.guests?.map((guest, index) => (
-            <Tag key={guest.id}>{guest.name}</Tag>
-          ))}
-        </Row>
-      </Row>
-    </Container>
+        </Flex>
+      </Flex>
+      <Flex alignItems={"center"} gap={"0.5rem"} flexWrap={"wrap"}>
+        <Text>Número de contato: </Text>
+        <Text fontWeight={"bold"}>{invite?.phone}</Text>
+      </Flex>
+      <Flex alignItems={"center"} gap={"0.5rem"} flexWrap={"wrap"}>
+        <Text>Pessoas no convite: </Text>
+        {invite?.guests?.map((guest, index) => (
+          <Badge
+            key={index}
+            h={"fit-content"}
+            w="fit-content"
+            variant="subtle"
+            colorScheme="green"
+          >
+            {guest?.name}
+          </Badge>
+        ))}
+      </Flex>
+    </Flex>
   );
 };

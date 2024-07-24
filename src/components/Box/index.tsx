@@ -1,52 +1,22 @@
-import { styled } from "@styled-system/jsx";
+import { Flex } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
-export const Box = styled("div", {
-  base: {
-    display: "flex",
-    h: "fit-content",
-    flexDir: "column",
+interface IBox {
+  children: ReactNode | ReactNode[];
+}
 
-    p: "1.25rem",
-    gap: "1rem",
-    border: "1px solid #e9eaef",
-    borderRadius: "xl",
-
-    fontSize: "sm",
-    fontWeight: "medium",
-  },
-});
-
-export const BoxButton = styled("button", {
-  base: {
-    all: "unset",
-
-    // w: "100%",
-
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-
-    gap: "0.5rem",
-    p: "0.75rem",
-
-    cursor: "pointer",
-
-    borderRadius: "xl",
-    fontSize: "sm",
-    fontWeight: "medium",
-  },
-  variants: {
-    variant: {
-      default: {
-        backgroundColor: "gray.200",
-      },
-      primary: {
-        backgroundColor: "#234723",
-        color: "white",
-      },
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-});
+export const Box = ({ children }: IBox) => {
+  return (
+    <Flex
+      flexDir={"column"}
+      w={"100%"}
+      border={"1px solid #e9eaef"}
+      borderRadius={"xl"}
+      p={"1rem"}
+      color={"#262626"}
+      gap={"1rem"}
+    >
+      {children}
+    </Flex>
+  );
+};

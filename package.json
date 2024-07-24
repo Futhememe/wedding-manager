@@ -1,36 +1,43 @@
 {
-  "name": "wedding-manager",
+  "name": "wedy-dashboard-joyce",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "prepare": "panda codegen",
-    "dev": "rm -rf .next && npm run prepare && next dev",
-    "build": "npm run prepare && next build",
-    "start": "next start -p 3001",
-    "lint": "next lint"
+    "dev": "pnpm run prepare && rm -rf .next && next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "cy:open": "cypress open"
   },
   "dependencies": {
-    "@ark-ui/react": "^1.2.1",
-    "@floating-ui/react": "^0.26.4",
-    "@hookform/resolvers": "^3.3.3",
-    "@phosphor-icons/react": "^2.0.15",
-    "axios": "^1.6.3",
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^3.3.4",
+    "@phosphor-icons/react": "^2.1.4",
+    "axios": "^1.6.8",
     "copy-to-clipboard": "^3.3.3",
     "faunadb": "^4.8.0",
-    "framer-motion": "^10.16.16",
-    "next": "14.0.4",
+    "framer-motion": "^11.0.28",
+    "next": "14.2.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.49.2",
-    "zod": "^3.22.4"
+    "react-hook-form": "^7.51.3",
+    "sonner": "^1.5.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "zod": "^3.22.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.23.0",
+    "@pandacss/dev": "^0.37.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.13.0",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "14.2.1",
     "typescript": "^5"
   }
 }

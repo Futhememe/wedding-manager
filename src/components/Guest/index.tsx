@@ -1,53 +1,90 @@
-import { IGuest } from "@/contexts/types";
-import { Container, Name, Pair } from "./styles";
-import { Row } from "../Layout";
-import { useManager } from "@/contexts/provider";
-import { Tag } from "../Tag";
+import { useGuestStore } from "@/stores/guestStore";
+import { Badge, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
+import { Pencil, Trash, TrashSimple } from "@phosphor-icons/react";
+import { css } from "@/styled-system/css";
 
-interface IGuestComponent {
-  guest: IGuest;
+interface IGuest {
+  onClickDelete: (id: string) => void;
+  onClickEdit: (id: string) => void;
+  id: string;
+  name: string;
+  type: string[];
+  pair?: string | null;
+  status?: "Waiting" | "Accepted" | "Denied";
 }
 
-const status = {
-  Waiting: "Aguardando",
-  Denied: "Ausente",
-  Accepted: "Confirmado",
-};
-
-const statusColor = {
-  Waiting: "yellow.100",
-  Denied: "red.100",
-  Accepted: "green.100",
-};
-
-export const Guest = ({ guest }: IGuestComponent) => {
-  const { getGuestById } = useManager();
+export const Guest = ({
+  onClickDelete,
+  onClickEdit,
+  name,
+  pair,
+  type = [],
+  id,
+  status,
+}: IGuest) => {
+  const { getGuestById } = useGuestStore();
 
   return (
-    <Container>
-      <Row>
-        <Name>{guest.name}</Name>
-      </Row>
-      <Row justifyContent="space-between">
-        {guest?.pair && (
-          <Pair>
-            {guest?.type[0]} com: <b>{getGuestById(guest.pair)?.name}</b>
-          </Pair>
+    <Flex
+      p={"8px 0 16px"}
+      flexDir={"column"}
+      w={"100%"}
+      borderBottom={"1px solid #e9eaef"}
+      gap={"0.25rem"}
+    >
+      <Flex justifyContent={"space-between"} alignItems={"center"}>
+        <Heading fontSize={"large"}>{name}</Heading>
+        <Flex>
+          <IconButton
+            aria-label="edit"
+            variant="ghost"
+            onClick={() => onClickEdit(id)}
+          >
+            <Pencil size={20} />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            variant="ghost"
+            onClick={() => onClickDelete(id)}
+          >
+            <Trash size={20} />
+          </IconButton>
+        </Flex>
+      </Flex>
+      <Flex
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        flexWrap={"wrap"}
+      >
+        {pair && (
+          <Text>
+            {type[0]} com: <b>{getGuestById(pair)?.name}</b>
+          </Text>
         )}
-        <Row gap="0.5rem">
-          {guest?.type?.map((type, index) => (
-            <Tag key={index}>{type}</Tag>
+        <div className={css({ display: "flex", gap: "8px" })}>
+          {type.map((guestType, index) => (
+            <Badge
+              key={index}
+              h={"fit-content"}
+              w="fit-content"
+              variant={"subtle"}
+              colorScheme="whatsapp"
+            >
+              {guestType}
+            </Badge>
           ))}
-          {guest.status && (
-            // @ts-ignore
-            <Tag bgColor={statusColor[guest.status]}>
-              {/* @ts-ignore */}
-              {status[guest.status]}
-            </Tag>
+          {status && status !== "Waiting" && (
+            <Badge
+              h={"fit-content"}
+              w="fit-content"
+              variant={"solid"}
+              colorScheme={status === "Accepted" ? "green" : "red"}
+            >
+              {status === "Accepted" ? "Confirmado" : "Não vai"}
+            </Badge>
           )}
-          {guest?.van && <Tag bgColor={"red.300"}>Quer ir de van</Tag>}
-        </Row>
-      </Row>
-    </Container>
+        </div>
+      </Flex>
+    </Flex>
   );
 };
